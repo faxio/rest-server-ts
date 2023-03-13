@@ -21,25 +21,21 @@ const loadData = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         // limpiar bd
         yield usuario_1.default.destroy({ where: {}, force: true });
         // cargar datos
-        const users = data_1.data.map(user => {
+        const users = data_1.data.map((user) => {
             const salt = bcryptjs_1.default.genSaltSync();
             user.password = bcryptjs_1.default.hashSync(user.password, salt);
+            return user;
+        });
+        // Encriptar
+        yield usuario_1.default.bulkCreate(users);
+        res.json({
+            msg: "cargado correctamente",
+            ok: true,
         });
     }
-    finally // Encriptar
-     { }
-    ;
-    // Encriptar
-    yield usuario_1.default.bulkCreate(users);
-    res.json({
-        msg: "cargado correctamente",
-        ok: true,
-    });
+    catch (error) {
+        console.log(error);
+    }
 });
 exports.loadData = loadData;
-try { }
-catch (error) {
-    console.log(error);
-}
-;
 //# sourceMappingURL=seed.js.map
