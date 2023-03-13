@@ -14,15 +14,17 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const usuario_1 = __importDefault(require("../routes/usuario"));
+const seed_1 = __importDefault(require("../routes/seed"));
 const cors_1 = __importDefault(require("cors"));
 const connection_1 = __importDefault(require("../db/connection"));
 class Server {
     constructor() {
         this.apiPaths = {
-            usuarios: '/api/usuarios'
+            usuarios: "/api/usuarios",
+            seed: "/seed",
         };
         this.app = (0, express_1.default)();
-        this.port = process.env.PORT || '8000';
+        this.port = process.env.PORT || "8000";
         this.dbConnection();
         this.middlewares();
         this.routes();
@@ -31,7 +33,7 @@ class Server {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 yield connection_1.default.sync();
-                console.log('DB Online');
+                console.log("DB Online");
             }
             catch (error) {
                 throw new Error(error);
@@ -45,14 +47,15 @@ class Server {
         // Lectura del body
         this.app.use(express_1.default.json());
         // Carpeta pública
-        this.app.use(express_1.default.static('public'));
+        this.app.use(express_1.default.static("public"));
     }
     routes() {
         this.app.use(this.apiPaths.usuarios, usuario_1.default);
+        this.app.use(this.apiPaths.seed, seed_1.default);
     }
     listen() {
         this.app.listen(this.port, () => {
-            console.log('Servidor corriendo en puerto ' + this.port);
+            console.log("Servidor corriendo en puerto " + this.port);
         });
     }
 }

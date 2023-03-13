@@ -3,7 +3,6 @@ import { loadData } from "../controllers/seed";
 
 const router = Router();
 
-router.get('/seed', loadData)
-
+router.get("/", loadData);
 
 export default router;

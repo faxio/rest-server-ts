@@ -1,20 +1,29 @@
-import { Request, Response } from "express"
+import { Request, Response } from "express";
+import { data } from "../db/data";
+import Usuario from "../models/usuario";
+import bcrypt from "bcryptjs";
 
+export const loadData = async (req: Request, res: Response) => {
+  try {
+    // limpiar bd
+    await Usuario.destroy({ where: {}, force: true });
 
-export const loadData = ( req: Request, res:Response) => {
+    // cargar datos
+    const users = data.map((user) => {
+      const salt = bcrypt.genSaltSync();
+      user.password = bcrypt.hashSync(user.password, salt);
+      return user;
+    });
 
-    try {
+    // Encriptar
 
-        res.json({
-            msg: "cargado correctamente",
-            ok: true
-        })
+    await Usuario.bulkCreate(users);
 
-    } catch (error: any){
-
-        console.log(error)
-    }
-
-
-
-}
+    res.json({
+      msg: "cargado correctamente",
+      ok: true,
+    });
+  } catch (error: any) {
+    console.log(error);
+  }
+};
