@@ -13,9 +13,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const usuario_1 = __importDefault(require("../src/routes/usuario"));
+const usuario_1 = __importDefault(require("../routes/usuario"));
 const cors_1 = __importDefault(require("cors"));
-const connection_1 = __importDefault(require("../src/db/connection"));
+const connection_1 = __importDefault(require("../db/connection"));
 class Server {
     constructor() {
         this.apiPaths = {
@@ -30,7 +30,7 @@ class Server {
     dbConnection() {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                yield connection_1.default.authenticate();
+                yield connection_1.default.sync();
                 console.log('DB Online');
             }
             catch (error) {
