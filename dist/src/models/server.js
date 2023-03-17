@@ -24,7 +24,7 @@ class Server {
             seed: "/seed",
         };
         this.app = (0, express_1.default)();
-        this.port = process.env.PORT || "8000";
+        this.port = process.env.PORT || "9000";
         this.dbConnection();
         this.middlewares();
         this.routes();
