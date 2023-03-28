@@ -18,6 +18,13 @@ router.post("/", [
         .isLength({ min: 6 }),
     validar_campos_1.validarCampos,
 ], usuarios_1.postUsuario);
+router.post("/login", [
+    (0, express_validator_1.check)("email", "invalid email").isEmail(),
+    (0, express_validator_1.check)("password", "It has to be greater than 6 characters ")
+        .notEmpty()
+        .isLength({ min: 6 }),
+    validar_campos_1.validarCampos,
+], usuarios_1.loginUsuario);
 router.put("/:id", usuarios_1.putUsuario);
 router.delete("/:id", usuarios_1.deleteUsuario);
 exports.default = router;

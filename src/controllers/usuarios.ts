@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import Usuario from "../models/usuario";
 import bcrypt from "bcryptjs";
+import { Model } from "sequelize";
 
 export const getUsuarios = async (req: Request, res: Response) => {
   const usuario = await Usuario.findAll();
@@ -49,6 +50,44 @@ export const postUsuario = async (req: Request, res: Response) => {
     res.json({
       usuario,
       ok: true,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      msg: "Hable con el administrador",
+    });
+  }
+};
+
+export const loginUsuario = async (req: Request, res: Response) => {
+  const { email, password } = req.body;
+
+  try {
+    const usuarioDB = await Usuario.findOne({ where: { email: email } });
+
+    if (!usuarioDB) {
+      return res.status(404).json({
+        ok: false,
+        msg: "User does not exist",
+      });
+    }
+
+    // Revisar contraseña
+    const validPassword = bcrypt.compareSync(password, usuarioDB.password);
+
+    if (!validPassword) {
+      return res.status(404).json({
+        ok: false,
+        msg: "Email or password is wrong",
+      });
+    }
+
+    // Generar JWT
+
+    res.json({
+      ok: true,
+      usuario: usuarioDB,
+      //token,
     });
   } catch (error) {
     console.log(error);

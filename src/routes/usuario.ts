@@ -3,6 +3,7 @@ import {
   deleteUsuario,
   getUsuario,
   getUsuarios,
+  loginUsuario,
   postUsuario,
   putUsuario,
 } from "../controllers/usuarios";
@@ -31,6 +32,17 @@ router.post(
   postUsuario
 );
 
+router.post(
+  "/login",
+  [
+    check("email", "invalid email").isEmail(),
+    check("password", "It has to be greater than 6 characters ")
+      .notEmpty()
+      .isLength({ min: 6 }),
+    validarCampos,
+  ],
+  loginUsuario
+);
 router.put("/:id", putUsuario);
 router.delete("/:id", deleteUsuario);
 

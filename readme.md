@@ -11,3 +11,11 @@
 2. En MySql crear una bd.
 3. Modificar con sus credenciales la conexión a la BD (En el .env está la configuración de la BD).
 4. En una terminal escribir `npm i` y `npm run dev`
+
+### Cargar datos de prueba (si el puerto es el 8000)
+
+`http://localhost:8000/seed`
+
+### Desplegar
+
+`docker compose up`
