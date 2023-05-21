@@ -10,10 +10,8 @@ const db = new sequelize_1.Sequelize(process.env.NAMEDB || "testing", process.en
     host: process.env.HOSTDB,
     dialect: "mysql",
     port: Number(process.env.PORTDB) || 3306,
-    /*
     // quitar los mensajes de la bd que se muestran en la consola
     logging: false,
-    */
 });
 exports.default = db;
 //# sourceMappingURL=connection.js.map

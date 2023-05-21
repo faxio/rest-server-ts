@@ -33,7 +33,7 @@ class Server {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 yield connection_1.default.sync();
-                console.log("DB Online");
+                //console.log("DB Online");
             }
             catch (error) {
                 throw new Error(error);
@@ -53,7 +53,7 @@ class Server {
         this.app.use(this.apiPaths.usuarios, usuario_1.default);
         this.app.use(this.apiPaths.seed, seed_1.default);
     }
-    listen() {
+    start() {
         this.app.listen(this.port, () => {
             console.log("Servidor corriendo en puerto " + this.port);
         });

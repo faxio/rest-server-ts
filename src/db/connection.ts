@@ -11,10 +11,9 @@ const db = new Sequelize(
     host: process.env.HOSTDB,
     dialect: "mysql",
     port: Number(process.env.PORTDB) || 3306,
-    /*
+
     // quitar los mensajes de la bd que se muestran en la consola
     logging: false,
-    */
   }
 );
 

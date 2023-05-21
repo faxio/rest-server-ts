@@ -5,7 +5,7 @@ import cors from "cors";
 import db from "../db/connection";
 
 class Server {
-  private app: Application;
+  public app: Application;
   private port: string;
   private apiPaths = {
     usuarios: "/api/usuarios",
@@ -24,7 +24,7 @@ class Server {
   async dbConnection() {
     try {
       await db.sync();
-      console.log("DB Online");
+      //console.log("DB Online");
     } catch (error: any) {
       throw new Error(error);
     }
@@ -46,7 +46,7 @@ class Server {
     this.app.use(this.apiPaths.seed, seed);
   }
 
-  listen() {
+  start() {
     this.app.listen(this.port, () => {
       console.log("Servidor corriendo en puerto " + this.port);
     });
